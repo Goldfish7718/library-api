@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const userSchema = z.object({
-  id: z.number().optional(),
   name: z.string().max(50).min(3),
   email: z.string().email(),
   password: z
@@ -14,9 +13,6 @@ export const userSchema = z.object({
   role: z.enum(["MEMBER", "ADMIN"]).default("MEMBER"),
   isEmailVerified: z.boolean().default(false),
   isActive: z.boolean().default(true),
-  createdAt: z.date().default(() => new Date()),
-  updatedAt: z.date().optional(),
-  deletedAt: z.date().nullable().optional(),
 });
 
 export type UserSchemaType = z.infer<typeof userSchema>;

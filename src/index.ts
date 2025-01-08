@@ -8,6 +8,7 @@ config();
 
 // ROUTE IMPORTS
 import userRoutes from "./routes/user.routes";
+import bookRoutes from "./routes/book.routes";
 
 // CONFIG
 const app = express();
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 // ROUTES
 app.use("/users", userRoutes);
+app.use("/book", bookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started at port ${PORT}`);

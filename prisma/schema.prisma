@@ -14,73 +14,73 @@ datasource db {
 }
 
 model User {
-  id    Int   @id @default(autoincrement()) 
-  name  String @db.VarChar(50)
-  email String @unique
-  password  String
-  role  Role @default(MEMBER)  
-  isEmailVerified Boolean @default(false)
-  isActive Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime?
+  id              Int       @id @default(autoincrement())
+  name            String    @db.VarChar(50)
+  email           String    @unique
+  password        String
+  role            Role      @default(MEMBER)
+  isEmailVerified Boolean   @default(false)
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  borrowedBooks BorrowedBook[] @relation("UserBorrowedBooks")
+  transactions  Transaction[]  @relation("UserTransactions")
 }
 
-// model Book {
-//   id             Int           @id @default(autoincrement())
-//   title          String
-//   isbn           String        @unique
-//   copiesAvailable Int          @default(0)
-//   createdAt      DateTime      @default(now())
-//   updatedAt      DateTime      @updatedAt
-//   deletedAt      DateTime?     @default(null)
+model Book {
+  id              Int       @id @default(autoincrement())
+  title           String
+  isbn            String    @unique
+  copiesAvailable Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
 
-//   authors        Author[]      @relation("BookAuthors")
-//   categories     Category[]    @relation("BookCategories")
-//   borrowedBooks  BorrowedBook[]
-// }
+  authors       Author[]       @relation("BookAuthors")
+  categories    Category[]     @relation("BookCategories")
+  borrowedBooks BorrowedBook[]
+}
 
-// model Author {
-//   id       Int      @id @default(autoincrement())
-//   name     String
-//   bio      String?
-//   books    Book[]    @relation("BookAuthors")
-// }
+model Author {
+  id    Int     @id @default(autoincrement())
+  name  String
+  bio   String?
+  books Book[]  @relation("BookAuthors")
+}
 
-// model Category {
-//   id          Int      @id @default(autoincrement())
-//   name        String
-//   description String?
-//   books       Book[]    @relation("BookCategories")
-// }
+model Category {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  books       Book[]  @relation("BookCategories")
+}
 
-// model BorrowedBook {
-//   id         Int       @id @default(autoincrement())
-//   userId     Int
-//   bookId     Int
-//   borrowDate DateTime  @default(now())
-//   returnDate DateTime?
-//   fineAmount Float     @default(0)
+model BorrowedBook {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  bookId     Int
+  borrowDate DateTime  @default(now())
+  returnDate DateTime?
+  fineAmount Float     @default(0)
 
-//   user       User      @relation(fields: [userId], references: [id])
-//   book       Book      @relation(fields: [bookId], references: [id])
-// }
+  user User @relation("UserBorrowedBooks", fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
 
-// model Transaction {
-//   id             Int       @id @default(autoincrement())
-//   userId         Int
-//   borrowedBookId Int
-//   amountPaid     Float
-//   paymentDate    DateTime  @default(now())
+  transactions Transaction[] @relation("BorrowedBookTransactions")
+}
 
-//   user           User      @relation(fields: [userId], references: [id])
-//   borrowedBook   BorrowedBook @relation(fields: [borrowedBookId], references: [id])
-// }
+model Transaction {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  borrowedBookId Int
+  amountPaid     Float
+  paymentDate    DateTime @default(now())
 
-// enum Role {
-//   ADMIN
-//   MEMBER
-// }
+  user         User         @relation("UserTransactions", fields: [userId], references: [id])
+  borrowedBook BorrowedBook @relation("BorrowedBookTransactions", fields: [borrowedBookId], references: [id])
+}
 
 enum Role {
   ADMIN
