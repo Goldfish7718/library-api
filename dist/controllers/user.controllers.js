@@ -67,9 +67,9 @@ exports.createUser = (0, createController_1.default)((req, res) => __awaiter(voi
     catch (error) {
         console.log(error);
         if (error instanceof zod_1.ZodError) {
-            res.json({ error });
+            res.status(400).json({ error });
         }
-        res.json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }));
 exports.login = (0, createController_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -111,9 +111,9 @@ exports.login = (0, createController_1.default)((req, res) => __awaiter(void 0, 
     catch (error) {
         console.log(error);
         if (error instanceof zod_1.ZodError) {
-            res.json({ error });
+            res.status(400).json({ error });
         }
-        res.json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }));
 exports.deleteUser = (0, createController_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -137,6 +137,6 @@ exports.logout = (0, createController_1.default)((req, res) => __awaiter(void 0,
     }
     catch (error) {
         console.log(error);
-        res.json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }));

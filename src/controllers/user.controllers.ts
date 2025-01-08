@@ -67,9 +67,9 @@ export const createUser = createController(async (req, res): Promise<any> => {
   } catch (error) {
     console.log(error);
     if (error instanceof ZodError) {
-      res.json({ error });
+      res.status(400).json({ error });
     }
-    res.json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -121,9 +121,9 @@ export const login = createController(async (req, res): Promise<any> => {
   } catch (error) {
     console.log(error);
     if (error instanceof ZodError) {
-      res.json({ error });
+      res.status(400).json({ error });
     }
-    res.json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -149,6 +149,6 @@ export const logout = createController(async (req, res) => {
     res.clearCookie("token").json({ message: "Logged out" });
   } catch (error) {
     console.log(error);
-    res.json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });

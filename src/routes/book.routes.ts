@@ -1,5 +1,9 @@
 import { Router } from "express";
+import { createBook, getBooks } from "../controllers/book.controllers";
 
-const router = Router()
+const router = Router();
 
-export default router
+router.get("/", getBooks);
+router.post("/", createBook);
+
+export default router;
