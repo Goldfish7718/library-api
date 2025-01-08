@@ -6,3 +6,5 @@ export const transactionSchema = z.object({
   amountPaid: z.number(),
   paymentDate: z.date().default(new Date()),
 });
+
+export type TransactionSchemaType = z.infer<typeof transactionSchema>;
