@@ -20,7 +20,7 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 exports.getAuthors = (0, createController_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const authors = yield prisma.author.findMany();
+        const authors = yield prisma.author.findMany({ include: { books: true } });
         res.status(200).json({ authors });
     }
     catch (error) {

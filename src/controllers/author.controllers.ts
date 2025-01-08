@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export const getAuthors = createController(async (req, res) => {
   try {
-    const authors = await prisma.author.findMany();
+    const authors = await prisma.author.findMany({ include: { books: true } });
 
     res.status(200).json({ authors });
   } catch (error) {
@@ -18,7 +18,7 @@ export const getAuthors = createController(async (req, res) => {
 
 export const createAuthor = createController(async (req, res) => {
   try {
-    const { author } = req.body;
+    const { author }: { author: AuthorSchemaType } = req.body;
 
     authorSchema.parse(author);
 

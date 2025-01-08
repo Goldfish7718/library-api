@@ -15,6 +15,25 @@ export const getBooks = createController(async (req, res) => {
   }
 });
 
+export const getBook = createController(async (req, res) => {
+  try {
+    const { isbn } = req.params;
+
+    const book = await prisma.book.findUnique({
+      where: {
+        isbn,
+      },
+      include: {
+        authors: true,
+      },
+    });
+
+    res.status(200).json({ book });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 export const createBook = createController(async (req, res) => {
   try {
     const { book }: { book: BookSchemaType } = req.body;

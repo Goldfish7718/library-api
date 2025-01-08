@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createBook = exports.getBooks = void 0;
+exports.createBook = exports.getBook = exports.getBooks = void 0;
 const zod_1 = require("zod");
 const book_model_1 = require("../models/book.model");
 const createController_1 = __importDefault(require("../utils/createController"));
@@ -22,6 +22,23 @@ exports.getBooks = (0, createController_1.default)((req, res) => __awaiter(void 
     try {
         const books = yield prisma.book.findMany({ include: { authors: true } });
         res.status(200).json({ books });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+}));
+exports.getBook = (0, createController_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { isbn } = req.params;
+        const book = yield prisma.book.findUnique({
+            where: {
+                isbn,
+            },
+            include: {
+                authors: true,
+            },
+        });
+        res.status(200).json({ book });
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error" });
