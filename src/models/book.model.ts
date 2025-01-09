@@ -8,6 +8,7 @@ export const bookSchema = z.object({
     .max(13, "ISBN Should not be more than 13 digits long"),
   copiesAvailable: z.number().int().nonnegative(),
   authors: z.array(z.number()),
+  categories: z.array(z.number()).optional(),
 });
 
 export type BookSchemaType = z.infer<typeof bookSchema>;

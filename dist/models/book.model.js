@@ -10,4 +10,5 @@ exports.bookSchema = zod_1.z.object({
         .max(13, "ISBN Should not be more than 13 digits long"),
     copiesAvailable: zod_1.z.number().int().nonnegative(),
     authors: zod_1.z.array(zod_1.z.number()),
+    categories: zod_1.z.array(zod_1.z.number()).optional(),
 });

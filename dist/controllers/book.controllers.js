@@ -20,7 +20,9 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 exports.getBooks = (0, createController_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const books = yield prisma.book.findMany({ include: { authors: true } });
+        const books = yield prisma.book.findMany({
+            include: { authors: true, categories: true },
+        });
         res.status(200).json({ books });
     }
     catch (error) {
@@ -36,6 +38,7 @@ exports.getBook = (0, createController_1.default)((req, res) => __awaiter(void 0
             },
             include: {
                 authors: true,
+                categories: true,
             },
         });
         res.status(200).json({ book });
@@ -45,16 +48,20 @@ exports.getBook = (0, createController_1.default)((req, res) => __awaiter(void 0
     }
 }));
 exports.createBook = (0, createController_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const { book } = req.body;
         book_model_1.bookSchema.parse(book);
         const transformedBook = Object.assign(Object.assign({}, book), { authors: {
                 connect: book.authors.map((author) => ({ id: author })),
+            }, categories: {
+                connect: (_a = book.categories) === null || _a === void 0 ? void 0 : _a.map((category) => ({ id: category })),
             } });
         const newBook = yield prisma.book.create({
             data: transformedBook,
             include: {
                 authors: true,
+                categories: true,
             },
         });
         res.status(200).json({ newBook });
@@ -62,7 +69,7 @@ exports.createBook = (0, createController_1.default)((req, res) => __awaiter(voi
     catch (error) {
         console.log(error);
         if (error instanceof zod_1.ZodError) {
-            res.json({ error });
+            res.status(400).json({ error });
         }
         res.status(500).json({ message: "Internal server error" });
     }
