@@ -14,6 +14,7 @@ const user_routes_1 = __importDefault(require("./routes/user.routes"));
 const book_routes_1 = __importDefault(require("./routes/book.routes"));
 const author_routes_1 = __importDefault(require("./routes/author.routes"));
 const category_routes_1 = __importDefault(require("./routes/category.routes"));
+const borrowedBook_routes_1 = __importDefault(require("./routes/borrowedBook.routes"));
 // CONFIG
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +27,7 @@ app.use("/users", user_routes_1.default);
 app.use("/book", book_routes_1.default);
 app.use("/author", author_routes_1.default);
 app.use("/category", category_routes_1.default);
+app.use("/borrowedbook", borrowedBook_routes_1.default);
 app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);
 });

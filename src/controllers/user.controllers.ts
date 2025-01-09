@@ -18,6 +18,20 @@ export const getUsers = createController(async (req, res) => {
   }
 });
 
+export const getUser = createController(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    res.status(200).json({ user });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "Internal Server Error" });
+  }
+});
+
 export const createUser = createController(async (req, res): Promise<any> => {
   try {
     let { user }: { user: UserSchemaType } = req.body;
