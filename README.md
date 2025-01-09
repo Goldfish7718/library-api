@@ -1,6 +1,6 @@
 # Library management REST API.
 
-This repository contains the codebase for my **** personal portfolio website. I'm creating this small README to list the technologies I have used.
+This repository contains the codebase for **backend internship project**
 
 ## Technologies Used
 
