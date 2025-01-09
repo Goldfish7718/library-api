@@ -24,13 +24,18 @@ git clone https://github.com/goldfish7718/library-api.git
 npm install
 ```
 
-3. Start Development server
+3. Run prisma migrations
+```bash
+npx prisma migrate dev
+```
+
+4. Start Development server
 
 ```bash
 npm run dev
 ```
 
-4. Set environment variables by referring to the [.env.example](.env.example)
+5. Set environment variables by referring to the [.env.example](.env.example)
 
 And now the server should be running on `https://localhost:3000`
 
